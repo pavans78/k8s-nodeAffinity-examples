@@ -1,0 +1,21 @@
+# The scheduler tries to find a node that meets the rule. If a matching node is not available, the scheduler still schedules the Pod.
+# The node preferably has a label with the key env and the value either be dev or test.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity2
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - dev
+            - test
+  containers:
+  - image: nginx
+    name: nginx 
