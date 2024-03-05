@@ -8,6 +8,6 @@ Node affinity is conceptually similar to nodeSelector, allowing you to constrain
 
 `preferredDuringSchedulingIgnoredDuringExecution`: The scheduler tries to find a node that meets the rule. If a matching node is not available, the scheduler still schedules the Pod.
 
-
+Reference: more information on the node affinity please refer this [link][https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity]
 
 
