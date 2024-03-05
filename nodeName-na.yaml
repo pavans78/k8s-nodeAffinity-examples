@@ -1,0 +1,13 @@
+# creating the pod based on nodeName. 
+# limitations: 
+# If the named node does not exist, the Pod will not run, and in some cases may be automatically deleted.
+# In cloud providers, node name is not constant. It will changes 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-name
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  nodeName: Node-01
