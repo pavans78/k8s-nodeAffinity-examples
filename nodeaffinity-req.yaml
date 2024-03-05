@@ -1,0 +1,19 @@
+# The scheduler can't schedule the Pod unless the node affinity rule is met. This functions like nodeSelector, but with a more expressive syntax.
+# The node must have a label with the key env and the value of that label must be dev, then only pod wil created and schedules.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - dev 
+  containers:
+  - image: nginx
+    name: nginx 
