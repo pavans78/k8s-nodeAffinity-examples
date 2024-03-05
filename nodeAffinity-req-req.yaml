@@ -1,0 +1,31 @@
+# The scheduler can't schedule the Pod unless the node affinity rule is met. This functions like nodeSelector, but with a more expressive syntax.
+# here in this scenario the required condtions are following OR conditions.
+# first required condition is satisifies, second  required condition is satisifies, it will be scheduled 
+# first required condition is fails, second  required condition is satisifies it will be scheduled 
+# first required condition is satisifes, second  required condition is fails it will be scheduled 
+# both conditions is fails, then it wont scheduled. 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-b
+            
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - prod
+  containers:
+  - image: nginx
+    name: nginx 
