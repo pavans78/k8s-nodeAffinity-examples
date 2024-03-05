@@ -1,0 +1,13 @@
+# nodeSelector is the simplest recommended form of node selection constraint. 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-selector
+  labels:
+    env: dev
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+  nodeSelector:
+    env: dev
