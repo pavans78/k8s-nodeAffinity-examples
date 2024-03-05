@@ -1,0 +1,31 @@
+# You can specify a weight between 1 and 100 for each instance of the preferredDuringSchedulingIgnoredDuringExecution
+# affinity type. When the scheduler finds nodes that meet all the other scheduling requirements of the Pod, the scheduler 
+# iterates through every preferred rule that the node satisfies and adds the value of the weight for that expression to a sum. 
+# based on the weight, the pod will scheduled into the node. Nodes with the highest total score are prioritized when the scheduler 
+# makes a scheduling decision for the Pod.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity3
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - dev
+            - test
+      - weight: 5
+        preference:
+          matchExpressions:
+           - key: env
+             operator: In
+             values:
+             - prod
+  containers:
+  - image: nginx
+    name: nginx 
