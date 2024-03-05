@@ -1,0 +1,38 @@
+# In this scenario, the node must have a label with the key topology.kubernetes.io/zone and the value of that label must be us-central1-c.
+# and The node preferably has a label with the key env and the value will be either test or prod. Here the in preferred condition, 
+# Nodes with the highest total score are prioritized when the scheduler makes a scheduling decision for the Pod. so node with the key a env 
+# and value with test will pick by scheduler.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity6
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-central1-c
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 5
+        preference:
+          matchExpressions:
+          - key: env
+            operator: In
+            values:
+            - test
+      - weight: 1
+        preference:
+          matchExpressions:
+           - key: env
+             operator: In
+             values:
+             - prod
+  nodeSelector:
+    env: dev
+  containers:
+  - image: nginx
+    name: nginx 
